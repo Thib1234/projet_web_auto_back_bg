@@ -3,24 +3,26 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class User extends Authenticatable
+class Ad extends Model
 {
     use HasFactory, SoftDeletes;
 
     protected $fillable = [
-        'name', 'email', 'password', 'phone', 'address',
+        'user_id', 'brand', 'model', 'year', 'mileage', 'price',
+        'fuel_type', 'transmission', 'description',
     ];
 
-    protected $hidden = [
-        'password', 'remember_token',
-    ];
-
-    public function ads()
+    public function user()
     {
-        return $this->hasMany(Ad::class);
+        return $this->belongsTo(User::class);
+    }
+
+    public function photos()
+    {
+        return $this->hasMany(Photo::class);
     }
 
     public function favorites()
@@ -41,16 +43,5 @@ class User extends Authenticatable
     public function contacts()
     {
         return $this->hasMany(Contact::class);
-    }
-
-    public function roles()
-    {
-        return $this->belongsToMany(Role::class);
-    }
-    // Dans App\Models\User
-
-    public function hasRole($role)
-    {
-        return $this->roles()->where('name', $role)->exists();
     }
 }
