@@ -16,9 +16,10 @@ return new class extends Migration
             $table->integer('year');
             $table->integer('mileage');
             $table->decimal('price', 10, 2);
-            $table->enum('fuel_type', ['essence', 'diesel', 'électrique', 'hybride']);
-            $table->enum('transmission', ['manuelle', 'automatique']);
+            $table->enum('fuel_type', ['Essence', 'Diesel', 'Électrique', 'Hybride']);
+            $table->enum('transmission', ['Manuelle', 'Automatique']);
             $table->text('description');
+            $table->enum('status', ['available', 'sold'])->default('available');
             $table->timestamps();
             $table->softDeletes();
         });

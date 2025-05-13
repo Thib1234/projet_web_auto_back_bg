@@ -12,7 +12,7 @@ class Ad extends Model
 
     protected $fillable = [
         'user_id', 'brand', 'model', 'year', 'mileage', 'price',
-        'fuel_type', 'transmission', 'description',
+        'fuel_type', 'transmission', 'description', 'status'
     ];
 
     public function user()
