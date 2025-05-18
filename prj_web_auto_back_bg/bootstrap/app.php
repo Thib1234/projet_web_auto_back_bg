@@ -13,14 +13,18 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware) {
-        // Configuration pour Sanctum - AJOUTEZ CECI
-        $middleware->api(prepend: [
-            \Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful::class,
-        ]);
+        // SUPPRIMEZ cette ligne pour l'auth par token Bearer
+        // $middleware->api(prepend: [
+        //     \Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful::class,
+        // ]);
         
         $middleware->alias([
             'admin' => CheckAdmin::class,
-            'auth:sanctum' => \Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful::class, // AJOUTEZ CECI
+        ]);
+        
+        // Désactiver CSRF pour les routes API
+        $middleware->validateCsrfTokens(except: [
+            'api/*'
         ]);
         
         $middleware->append(\Illuminate\Http\Middleware\HandleCors::class);
